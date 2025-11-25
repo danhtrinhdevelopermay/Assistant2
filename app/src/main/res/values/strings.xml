@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AI Assistant</string>
+    <string name="ask_question">Hỏi điều gì đó…</string>
+    <string name="send">Gửi</string>
+    <string name="listening">Đang lắng nghe…</string>
+    <string name="thinking">Đang suy nghĩ…</string>
+    <string name="welcome_message">Xin chào! Tôi có thể giúp gì cho bạn?</string>
+</resources>

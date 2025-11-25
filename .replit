@@ -1,0 +1,25 @@
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Validate Android Project"
+
+[[workflows.workflow]]
+name = "Validate Android Project"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./validate-project.sh"
+
+[workflows.workflow.metadata]
+outputType = "console"
