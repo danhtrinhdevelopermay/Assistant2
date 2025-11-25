@@ -34,16 +34,5 @@ class AssistantVoiceInteractionSessionService : VoiceInteractionSessionService()
             Log.d("VoiceSession", "Session hidden")
             finish()
         }
-
-        override fun onHandleAssist(data: Bundle?) {
-            super.onHandleAssist(data)
-            Log.d("VoiceSession", "Handle assist called")
-            show(data, SHOW_WITH_ASSIST)
-        }
-        
-        override fun onHandleAssistSecondary(data: Bundle?, structure: android.app.assist.AssistStructure?, content: android.app.assist.AssistContent?, index: Int, count: Int) {
-            super.onHandleAssistSecondary(data, structure, content, index, count)
-            show(data, SHOW_WITH_ASSIST)
-        }
     }
 }
