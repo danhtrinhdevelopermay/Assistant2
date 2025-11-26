@@ -203,18 +203,8 @@ fun AssistantScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            AnimatedVisibility(
-                visible = isActive,
-                enter = slideInVertically(
-                    initialOffsetY = { it },
-                    animationSpec = tween(500)
-                ) + fadeIn(),
-                exit = slideOutVertically(
-                    targetOffsetY = { it },
-                    animationSpec = tween(500)
-                ) + fadeOut()
-            ) {
-                Box(modifier = Modifier.fillMaxWidth()) {
+            Box(modifier = Modifier.fillMaxWidth()) {
+                if (isActive) {
                     SiriGradientBorder(
                         modifier = Modifier.matchParentSize(),
                         isActive = isActive,
@@ -225,55 +215,55 @@ fun AssistantScreen(
                         modifier = Modifier.matchParentSize(),
                         isActive = isActive
                     )
+                }
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                Color(0xFF1C1C1E).copy(alpha = 0.95f),
-                                RoundedCornerShape(24.dp)
-                            )
-                            .padding(12.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        TextField(
-                            value = inputText,
-                            onValueChange = { inputText = it },
-                            placeholder = {
-                                Text(
-                                    "Hỏi điều gì đó...",
-                                    color = Color.White.copy(alpha = 0.5f)
-                                )
-                            },
-                            modifier = Modifier.weight(1f),
-                            colors = TextFieldDefaults.colors(
-                                focusedContainerColor = Color.Transparent,
-                                unfocusedContainerColor = Color.Transparent,
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                cursorColor = Color(0xFF00C6FF),
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent
-                            ),
-                            singleLine = true
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            Color(0xFF1C1C1E).copy(alpha = 0.95f),
+                            RoundedCornerShape(24.dp)
                         )
-
-                        IconButton(
-                            onClick = {
-                                if (inputText.isNotBlank()) {
-                                    viewModel.sendMessage(inputText)
-                                    inputText = ""
-                                    focusManager.clearFocus()
-                                }
-                            },
-                            enabled = inputText.isNotBlank() && uiState !is UiState.Thinking
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Send,
-                                contentDescription = "Send",
-                                tint = if (inputText.isNotBlank()) Color(0xFF00C6FF) else Color.Gray
+                        .padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TextField(
+                        value = inputText,
+                        onValueChange = { inputText = it },
+                        placeholder = {
+                            Text(
+                                "Hỏi điều gì đó...",
+                                color = Color.White.copy(alpha = 0.5f)
                             )
-                        }
+                        },
+                        modifier = Modifier.weight(1f),
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            focusedTextColor = Color.White,
+                            unfocusedTextColor = Color.White,
+                            cursorColor = Color(0xFF00C6FF),
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        ),
+                        singleLine = true
+                    )
+
+                    IconButton(
+                        onClick = {
+                            if (inputText.isNotBlank()) {
+                                viewModel.sendMessage(inputText)
+                                inputText = ""
+                                focusManager.clearFocus()
+                            }
+                        },
+                        enabled = inputText.isNotBlank() && uiState !is UiState.Thinking
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Send,
+                            contentDescription = "Send",
+                            tint = if (inputText.isNotBlank()) Color(0xFF00C6FF) else Color.Gray
+                        )
                     }
                 }
             }
