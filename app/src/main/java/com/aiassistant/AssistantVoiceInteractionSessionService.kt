@@ -9,8 +9,12 @@ import android.util.Log
 
 class AssistantVoiceInteractionSessionService : VoiceInteractionSessionService() {
 
+    companion object {
+        private const val TAG = "VoiceSession"
+    }
+
     override fun onNewSession(args: Bundle?): VoiceInteractionSession {
-        Log.d("VoiceSession", "Creating new session")
+        Log.d(TAG, "Creating new voice interaction session")
         return AssistantVoiceInteractionSession(this)
     }
 
@@ -18,21 +22,34 @@ class AssistantVoiceInteractionSessionService : VoiceInteractionSessionService()
 
         override fun onShow(args: Bundle?, showFlags: Int) {
             super.onShow(args, showFlags)
-            Log.d("VoiceSession", "Session shown")
+            Log.d(TAG, "Session shown with flags: $showFlags")
             
-            val intent = Intent(context, AssistantOverlayActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or 
-                       Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                       Intent.FLAG_ACTIVITY_SINGLE_TOP
-                args?.let { putExtras(it) }
+            try {
+                val intent = Intent(context, AssistantOverlayActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or 
+                           Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                           Intent.FLAG_ACTIVITY_SINGLE_TOP or
+                           Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+                    args?.let { putExtras(it) }
+                }
+                startAssistantActivity(intent)
+                Log.d(TAG, "Started assistant activity successfully")
+            } catch (e: Exception) {
+                Log.e(TAG, "Error starting assistant activity: ${e.message}")
+                context.startActivity(Intent(context, AssistantOverlayActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                })
             }
-            context.startActivity(intent)
         }
 
         override fun onHide() {
             super.onHide()
-            Log.d("VoiceSession", "Session hidden")
-            finish()
+            Log.d(TAG, "Session hidden")
+        }
+        
+        override fun onHandleScreenshot(screenshot: android.graphics.Bitmap?) {
+            super.onHandleScreenshot(screenshot)
+            Log.d(TAG, "Screenshot received")
         }
     }
 }
