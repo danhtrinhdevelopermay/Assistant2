@@ -46,10 +46,5 @@ class AssistantVoiceInteractionSessionService : VoiceInteractionSessionService()
             super.onHide()
             Log.d(TAG, "Session hidden")
         }
-        
-        override fun onHandleScreenshot(screenshot: android.graphics.Bitmap?) {
-            super.onHandleScreenshot(screenshot)
-            Log.d(TAG, "Screenshot received")
-        }
     }
 }

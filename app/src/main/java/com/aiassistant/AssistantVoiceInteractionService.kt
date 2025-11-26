@@ -1,6 +1,5 @@
 package com.aiassistant
 
-import android.content.Intent
 import android.os.Bundle
 import android.service.voice.VoiceInteractionService
 import android.util.Log
@@ -19,16 +18,11 @@ class AssistantVoiceInteractionService : VoiceInteractionService() {
     override fun onLaunchVoiceAssistFromKeyguard() {
         super.onLaunchVoiceAssistFromKeyguard()
         Log.d(TAG, "Launching from keyguard")
-        showSession(Bundle(), SHOW_SOURCE_ASSIST_GESTURE)
+        showSession(Bundle(), 0)
     }
 
     override fun onShutdown() {
         super.onShutdown()
         Log.d(TAG, "Service shutdown")
-    }
-    
-    override fun onBind(intent: Intent): android.os.IBinder? {
-        Log.d(TAG, "Service bound with intent: ${intent.action}")
-        return super.onBind(intent)
     }
 }
